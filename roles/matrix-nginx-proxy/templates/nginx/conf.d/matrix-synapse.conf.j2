@@ -224,10 +224,6 @@ server {
         add_header Content-Security-Policy "default-src 'self' http: https: data: blob: 'unsafe-inline'" always;
         add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
 
-        add_header Access-Control-Allow-Origin "*";
-        add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS";
-        add_header Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization";
-
 	ssl_certificate {{ matrix_ssl_config_dir_path }}/live/{{ matrix_nginx_proxy_proxy_matrix_hostname }}/fullchain.pem;
 	ssl_certificate_key {{ matrix_ssl_config_dir_path }}/live/{{ matrix_nginx_proxy_proxy_matrix_hostname }}/privkey.pem;
 	ssl_protocols {{ matrix_nginx_proxy_ssl_protocols }};
@@ -261,10 +257,6 @@ server {
 	add_header Referrer-Policy "no-referrer-when-downgrade" always;
 	add_header Content-Security-Policy "default-src 'self' http: https: data: blob: 'unsafe-inline'" always;
 	add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
-
-	add_header Access-Control-Allow-Origin "*";
-	add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS";
-	add_header Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization";
 
 	root /dev/null;
 
