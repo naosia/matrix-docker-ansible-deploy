@@ -38,6 +38,10 @@ http {
 	sendfile on;
 	#tcp_nopush on;
 
+	# SSL Sessions
+	ssl_session_timeout 1d;
+        ssl_session_cache shared:SSL:10m;
+        ssl_session_tickets off;
 
 	# OCSP Stapling
         ssl_stapling on;
