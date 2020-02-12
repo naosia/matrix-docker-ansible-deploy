@@ -71,7 +71,7 @@ matrix_nginx_proxy_container_federation_host_bind_port: '8448'
 # as specified in the `matrix_nginx_proxy_base_domain_homepage_template` variable.
 # You can also put additional files to use for this webpage
 # in the `{{ matrix_nginx_proxy_data_path }}/matrix-domain` (`/matrix/nginx-proxy/data/matrix-domain`) directory.
-matrix_nginx_proxy_base_domain_serving_enabled: false
+matrix_nginx_proxy_base_domain_serving_enabled: true
 
 matrix_nginx_proxy_base_domain_hostname: "{{ matrix_domain }}"
 
@@ -160,7 +160,7 @@ matrix_nginx_proxy_proxy_matrix_additional_server_configuration_blocks: []
 matrix_nginx_proxy_reload_cron_time_definition: "20 4 */5 * *"
 
 # Specifies which SSL protocols to use when serving Riot and Synapse
-matrix_nginx_proxy_ssl_protocols: "TLSv1.1 TLSv1.2 TLSv1.3"
+matrix_nginx_proxy_ssl_protocols: "TLSv1.2 TLSv1.3"
 
 # Controls whether the self-check feature should validate SSL certificates.
 matrix_nginx_proxy_self_check_validate_certificates: true
