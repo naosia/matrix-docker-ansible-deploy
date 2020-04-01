@@ -3,7 +3,7 @@ matrix_nginx_proxy_enabled: true
 # We use an official nginx image, which we fix-up to run unprivileged.
 # An alternative would be an `nginxinc/nginx-unprivileged` image, but
 # that is frequently out of date.
-matrix_nginx_proxy_docker_image: "nginx:1.17.8-alpine"
+matrix_nginx_proxy_docker_image: "nginx:1.17.9-alpine"
 matrix_nginx_proxy_docker_image_force_pull: "{{ matrix_nginx_proxy_docker_image.endswith(':latest') }}"
 
 matrix_nginx_proxy_base_path: "{{ matrix_base_data_path }}/nginx-proxy"
@@ -105,6 +105,10 @@ matrix_nginx_proxy_proxy_matrix_hostname: "{{ matrix_server_fqn_matrix }}"
 matrix_nginx_proxy_proxy_dimension_enabled: false
 matrix_nginx_proxy_proxy_dimension_hostname: "{{ matrix_server_fqn_dimension }}"
 
+# Controls whether proxying the jitsi domain should be done.
+matrix_nginx_proxy_proxy_jitsi_enabled: false
+matrix_nginx_proxy_proxy_jitsi_hostname: "{{ matrix_server_fqn_jitsi }}"
+
 # Controls whether proxying for the matrix-corporal API (`/_matrix/corporal`) should be done (on the matrix domain)
 matrix_nginx_proxy_proxy_matrix_corporal_api_enabled: false
 matrix_nginx_proxy_proxy_matrix_corporal_api_addr_with_container: "matrix-corporal:41081"
@@ -164,6 +168,9 @@ matrix_nginx_proxy_proxy_riot_additional_server_configuration_blocks: []
 # A list of strings containing additional configuration blocks to add to the matrix dimension's server configuration.
 matrix_nginx_proxy_proxy_dimension_additional_server_configuration_blocks: []
 
+# A list of strings containing additional configuration blocks to add to the jitsi's server configuration.
+matrix_nginx_proxy_proxy_jitsi_additional_server_configuration_blocks: []
+
 # A list of strings containing additional configuration blocks to add to the matrix domain server configuration.
 matrix_nginx_proxy_proxy_domain_additional_server_configuration_blocks: []
 
@@ -176,6 +183,12 @@ matrix_nginx_proxy_ssl_protocols: "TLSv1.2 TLSv1.3"
 
 # Controls whether the self-check feature should validate SSL certificates.
 matrix_nginx_proxy_self_check_validate_certificates: true
+
+# Controls whether redirects will be followed when checking the `/.well-known/matrix/client` resource.
+#
+# As per the spec (https://matrix.org/docs/spec/client_server/r0.6.0#well-known-uri), it shouldn't be,
+# so we default to not following redirects as well.
+matrix_nginx_proxy_self_check_well_known_matrix_client_follow_redirects: none
 
 # By default, this playbook automatically retrieves and auto-renews
 # free SSL certificates from Let's Encrypt.
@@ -205,7 +218,7 @@ matrix_ssl_domains_to_obtain_certificates_for: []
 
 # Controls whether to obtain production or staging certificates from Let's Encrypt.
 matrix_ssl_lets_encrypt_staging: false
-matrix_ssl_lets_encrypt_certbot_docker_image: "certbot/certbot:v1.2.0"
+matrix_ssl_lets_encrypt_certbot_docker_image: "certbot/certbot:v1.3.0"
 matrix_ssl_lets_encrypt_certbot_docker_image_force_pull: "{{ matrix_ssl_lets_encrypt_certbot_docker_image.endswith(':latest') }}"
 matrix_ssl_lets_encrypt_certbot_standalone_http_port: 2402
 matrix_ssl_lets_encrypt_support_email: ~
